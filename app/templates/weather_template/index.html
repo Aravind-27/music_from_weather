@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=1.0">
+	<link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static',filename= 'images/apple-icon.png') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static',filename= 'images/favicon.png') }}">
+	<title>Weather</title>
+
+	<!-- Loading third party fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+	<link href="{{ url_for('static',filename= 'fonts/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+	<!-- Loading main css file -->
+
+	<link rel="stylesheet" href="{{ url_for('static',filename= 'style.css') }}">
+
+</head>
+
+<body>
+	<div class="site-header">
+		<nav class="navbar navbar-expand-lg ftco_navbar" id="ftco-navbar">
+			<div class="container">
+				<a href="{{ url_for('home') }}" class="branding">
+					<img src="{{ url_for('static',filename= 'images/logo.png') }}" alt="logo" class="logo">
+					<div class="logo-type">
+						<h1 class="site-title">Groovy</h1>
+						<sub> Creating Playlist Based on Weather </sub>
+					</div>
+				</a>
+
+				<!-- Default snippet for navigation -->
+				<div class="social-media  order-lg-last">
+					<p class="mb-0 d-flex footer-icons">
+						<a href="https://www.linkedin.com/in/aravind-nair-206"
+							class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-linkedin"></span></a>
+						<a href="https://github.com/Aravind-27/music_from_weather"
+							class="d-flex align-items-center justify-content-center"><span
+								class="fa fa-github"></span></a>
+					</p>
+				</div>
+
+			</div> <!-- .site-header -->
+		</nav>
+	</div>
+	<div class="hero">
+		<div class="container">
+			<form action="{{ url_for('home') }}" class="find-location" method="POST">
+
+				<input type="text" placeholder="Find your location..." name="query">
+				<input type="submit" value="Find">
+			</form>
+
+		</div>
+	</div>
+
+	<div class="forecast-table">
+		<div class="container">
+			<div class="forecast-container">
+				<div class="today forecast">
+					<div class="forecast-header">
+						<div class="day">{{ context.today_day_name }}</div>
+						<div class="date">{{ context.today_date }}</div>
+					</div> <!-- .forecast-header -->
+					<div class="forecast-content">
+						<div class="location">{{ context.address }}</div>
+						<div class="degree">
+							<div class="num">{{ context.current_temp }}<sup>o</sup>C</div>
+							<div class="forecast-icon">
+								<img src="{{ url_for('static',filename= context.weather_icon) }}" alt="Image" width=75>
+							</div>
+						</div>
+						<span><img src="{{ url_for('static',filename= 'images/icon-umberella.png' ) }}"
+								alt="humidity">{{ context.humidity }}</span>
+						<span><img src="{{ url_for('static',filename= 'images/icon-wind.png') }}"
+								alt="wind_speed">{{ context.wind_speed }}</span>
+						<span><img src="{{ url_for('static',filename= 'images/icon-compass.png') }}"
+								alt="wind_direction">{{context.wind_direction}}</span>
+					</div>
+				</div>
+				{% for day in context.daily_weather%}
+				<div class="forecast">
+					<div class="forecast-header">
+						<div class="day">{{day.2}}</div>
+					</div> <!-- .forecast-header -->
+					<div class="forecast-content">
+						<div class="forecast-icon">
+							<img src="{{ url_for('static',filename= day.3) }}" alt="icon" width=48>
+						</div>
+						<div class="degree">{{day.0}}<sup>o</sup>C</div>
+						<small>{{day.1}}<sup>o</sup>C</small>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<h2 class=" fullwidth-block section-title"> People Here Like Listening to... </h2>
+	<main class="main-content">
+		<div class="container">
+			<div class="row">
+				{% for video in context.videos%}
+				<div class="col-md-3 col-sm-6">
+					<div class="live-camera">
+						<figure class="live-camera-cover">
+							<a href="{{video.url}}">
+								<img src="{{video.thumbnail}}" alt="thumbnail">
+							</a>
+						</figure>
+						<h3 class="location">{{video.title}}</h3>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</main> <!-- .main-content -->
+
+	<!-- Footer -->
+
+	<footer class="footer-distributed">
+		<div class="footer-center">
+			<p class="footer-about">
+				Copyright © <span id="copyright">
+					<script>
+						document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+					</script>
+				</span> Made with <i class="fa fa-heart"></i>
+			</p>
+		</div>
+	</footer>
+
+	<!-- Footer-->
+
+</body>
+
+</html>
