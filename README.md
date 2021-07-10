@@ -44,7 +44,7 @@ In the project directory, you can run:
 #### `pip3 install -r requirements.txt`
 which installs all the necessary dependencies.
 
-#### `python3 app.py`
+#### `python3 run.py`
 Run the app in the development mode.<br>
 Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
